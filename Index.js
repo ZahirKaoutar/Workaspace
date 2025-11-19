@@ -84,3 +84,50 @@ function Afficherinfo(){
 
 
 }
+
+
+
+const ListEmploye=JSON.parse(localStorage.getItem("ListEmploye") ||"[]")
+Afficherinfo()
+
+function AjoutEmploye(){
+    
+  btnEnregistrer.addEventListener("click",(e)=>{
+     e.preventDefault();
+    const Employe={
+    nom:document.querySelector(".nom").value,
+    email:document.querySelector(".email").value,
+    tel:document.querySelector(".tel").value,
+    img:document.querySelector(".img").value,
+    role:document.querySelector("#role").value,
+    zone:"ussingned",
+    Expriences:[]
+    
+    }
+    const Allexp=ContainerExpe.querySelectorAll(".Expperecedent")
+    Allexp.forEach(e=>{
+        const Experience={
+        post:e.querySelector(".post").value,
+        Debut:e.querySelector(".Deb").value,
+        Fin:e.querySelector(".Fin").value,
+        Compagnie:e.querySelector(".Compangie").value,
+    }
+    Employe.Expriences.push(Experience);
+
+    })
+     
+    ListEmploye.push(Employe); 
+     localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
+      Afficherinfo()
+      form.reset()
+    ContainerExpe.innerHTML = "";
+     modalOverlay.style.display="none"
+
+
+  })
+  Afficherinfo()
+ 
+}
+AjoutEmploye()
+
+
