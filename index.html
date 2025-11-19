@@ -10,7 +10,60 @@
 <body>
      <header><h1>Gestion dees worpalce des employes</h1></header>
    <main>
-    <section class="side1"></section>
+    <section class="side1">
+            <section class="modalOverlay">
+                    <div class="modalBox">
+                        <span class="closeModal">&times;</span>
+                        <form action="">
+                            <div class="container">
+                                <div class="group">
+                                    <label for="img">Image</label>
+                                    <input id="img"  class="img" type="url" name="image" required>
+                                    <img id="previewImg" class="previewImg" src="" alt="Aucun aperçu">
+                                </div>
+                                <div class="group">
+                                    <label for="nom">Nom</label>
+                                    <input id="nom" class="nom" name="nom" type="text" required>
+                                </div>
+                                <div class="group">
+                                    <label for="email">Email</label>
+                                    <input  id="email"  name="email"  class="email" type="email" required>
+                                </div>
+                                 <div class="group">
+                                   <label for="tel">Telé</label>
+                                    <input type="tel" name="tel" id="tel" class="tel" required>
+                                </div>
+                                <div class="group">
+                                    <label for="role">Role</label>
+                                  
+                                     <select name="role" id="role"  required>
+                                        <option value="receptionnite">receptionnite</option>
+                                        <option  value="Technicien IT">Technicien IT</option>
+                                        <option value=" Agent de sécurité"> Agent de sécurité</option>
+                                        <option value="Manager"> Manager</option>
+                                        <option value="autre"> Autre</option>
+                                     </select>
+                                </div>
+                                <div class="group">
+                                    <button class="btnAjout">Ajouter une expérience</button>
+                                </div>
+                                
+                                <div class="expContainer">
+                                    
+                                </div>
+                                 <button  class ="submit" type="submit">Enregistrer</button>
+                                
+                            </div>
+                                
+                                
+
+                               
+                        </form>
+                    </div>
+
+            </section>
+
+    </section>
     <section class="side2"></section>
    </main>
    <footer></footer>
