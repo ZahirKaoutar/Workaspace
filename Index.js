@@ -62,3 +62,25 @@ function ExpDynamique(){
 
 
 }
+
+
+ExpDynamique()
+function Afficherinfo(){
+    const InfoEmp=document.querySelector(".InfoEmp");
+    InfoEmp.innerHTML=ListEmploye.map(e=>
+
+        `  
+        <div class="employe-card">
+            <img alt="image" class="imgprofile" src="${e.img}">
+            <div class="rolename">
+                <h4>${e.nom}</h4>
+                <h5>${e.role}</h5>
+            </div>
+        </div>
+        `
+
+    ).join("")
+     
+
+
+}
