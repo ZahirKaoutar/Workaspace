@@ -131,3 +131,16 @@ function AjoutEmploye(){
 AjoutEmploye()
 
 
+inputImg.addEventListener("input",()=>{
+    url=inputImg.value;
+    if(url===""){
+        previewImg.style.display="none"
+        previewImg.src=""
+        return;
+    }else{
+        previewImg.src=url;
+         previewImg.style.display = "block";
+    }
+
+
+})
