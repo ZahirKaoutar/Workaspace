@@ -365,46 +365,46 @@ inputImg.addEventListener("input", () => {
      })
 
 
-    // //salle de securite
-    // document.querySelector("#sallSec").addEventListener("click", () => {
-    //     const listSec = document.querySelector("#listSec");
+    //salle de securite
+    document.querySelector("#sallSec").addEventListener("click", () => {
+        const listSec = document.querySelector("#listSec");
 
-    //     listSec.style.display = "flex";
-    //     listSec.innerHTML = "";
+        listSec.style.display = "flex";
+        listSec.innerHTML = "";
 
-    //     const ListSecu = ListEmploye.filter(emp =>
-    //         emp.zone === "ussingned" &&
-    //         (emp.role === "Agent-sécurité" || emp.role === "nettoyage")
-    //     );
+        const ListSecu = ListEmploye.filter(emp =>
+            emp.zone === "ussingned" &&
+            (emp.role === "Agent-sécurité" || emp.role === "nettoyage")
+        );
 
-    //     if (ListSecu.length === 0) {
-    //         listSec.insertAdjacentHTML("beforeend", `<p>aucun</p>`);
-    //     } else {
-    //         ListSecu.forEach(emp => {
-    //             listSec.insertAdjacentHTML("beforeend", `
-    //             <div class="employe-card2">
-    //                 <img alt="image" class="imgprofile2" src="${emp.img}">
-    //                 <div class="rolename2">
-    //                     <h4>${emp.nom}</h4>
-    //                     <h5>${emp.role}</h5>
-    //                 </div>
-    //             </div>
-    //         `);
-    //         });
-    //     }
-
-
-    //     listSec.insertAdjacentHTML(
-    //         "afterbegin",
-    //         `<button class="closeSec">Fermer</button>`
-    //     );
+        if (ListSecu.length === 0) {
+            listSec.insertAdjacentHTML("beforeend", `<p>aucun</p>`);
+        } else {
+            ListSecu.forEach(emp => {
+                listSec.insertAdjacentHTML("beforeend", `
+                <div class="employe-card2">
+                    <img alt="image" class="imgprofile2" src="${emp.img}">
+                    <div class="rolename2">
+                        <h4>${emp.nom}</h4>
+                        <h5>${emp.role}</h5>
+                    </div>
+                </div>
+            `);
+            });
+        }
 
 
-    //     const close = listSec.querySelector(".closeSec");
-    //     close.addEventListener("click", () => {
-    //         listSec.style.display = "none";
-    //     });
-    // });
+        listSec.insertAdjacentHTML(
+            "afterbegin",
+            `<button class="closeSec">Fermer</button>`
+        );
+
+
+        const close = listSec.querySelector(".closeSec");
+        close.addEventListener("click", () => {
+            listSec.style.display = "none";
+        });
+    });
 
 
 
