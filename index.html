@@ -38,8 +38,9 @@
                                   
                                      <select name="role" id="role"  required>
                                         <option value="receptionnite">receptionnite</option>
-                                        <option  value="Technicien IT">Technicien IT</option>
-                                        <option value=" Agent de sécurité"> Agent de sécurité</option>
+                                         <option value="nettoyage">nettoyage</option>
+                                        <option  value="Technicien-IT">Technicien IT</option>
+                                        <option value=" Agent-sécurité"> Agent de sécurité</option>
                                         <option value="Manager"> Manager</option>
                                         <option value="autre"> Autre</option>
                                      </select>
@@ -72,38 +73,65 @@
 
     </section>
     <section class="side2">
+        <!-- img absolute  -->
+       
           <div class="ZonCont">
 
-            <div class="z-Conference">
+            <div data-zone="conference" class="z-Conference">
+                <div  id="listC"class="ListZEmp"> </div>
+
                 <div class="name-z">Salle de conference</div>
-                <button class="plusC">+</button>
+                <button  id="sallC"class="plus">+</button>
             </div>
-            <div class="z-Réception">
+
+            <div data-zone="reception" class="z-Réception">
+                
+                    <div id="listRec" class="ListZEmp"></div>
                 <div  class="name-z">Salle de reception</div>
-                <button class="plusR">+</button>
+                <button  id="sallRec" class="plus">+</button>
             </div>
-            <div class="z-serveurs">
+
+            <div data-zone="serveur" class="z-serveurs">
+               
+                <div  id="listSer" class="ListZEmp"></div>
                 <div  class="name-z">Salle de Serveur</div>
-                <button class="plusSer">+</button>
+                <button id="salSer" class="plus">+</button>
             </div>
-            <div class="z-personnel">
+
+            <div  data-zone="personnel" class="z-personnel">
+                
+                <div id="listPer"  class="ListZEmp"></div>
                 <div>Salle Personnel</div>
-                <button class="plusP">+</button>
+                <button id="sallP" class="plus">+</button>
             </div>
-            <div class="z-archives">
+            <div  data-zone="archives" class="z-archives">
+                    <div  id="listArch" class="ListZEmp">
+                        
+                
+            
+                    </div>
                 <div> Salle Archives </div>
-                <button class="plusA">+</button>
+                <button id="sallAr" class="plus">+</button>
             </div>
-            <div class="z-securite">
+            <div  data-zone="securite" class="z-securite">
+
+                <div  id="listSec" class="ListZEmp"></div>
+  
                 <div> Salle Securite </div>
 
-                <button class="plusSec">+</button>
+                <button  id="sallSec" class="plus">+</button>
             </div>
+
 
             
 
-        </div>
-    </section>
+        </div> 
+
+
+       
+ </section> 
+ 
+
    </main>
    <footer></footer>
     

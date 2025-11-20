@@ -1,36 +1,43 @@
- const ContainerExpe =document.querySelector(".expContainer");
- const form=document.querySelector("form")
- const ListempAff=document.querySelector("#listEmployee")
+const ContainerExpe = document.querySelector(".expContainer");
+const form = document.querySelector("form")
+const ListempAff = document.querySelector("#listEmployee")
 
- const AddExperiece =document.querySelector(".btnAjout");
- const Addnewworker=document.querySelector(".addemployer");
- const inputImg = document.querySelector("#img");
+const AddExperiece = document.querySelector(".btnAjout");
+const Addnewworker = document.querySelector(".addemployer");
+const inputImg = document.querySelector("#img");
 const previewImg = document.querySelector("#previewImg");
+
+
+
 
 
 const modalOverlay = document.querySelector(".modalOverlay");
 
 const closeModal = document.querySelector(".closeModal");
-const btnEnregistrer=document.querySelector(".submit")
+const btnEnregistrer = document.querySelector(".submit")
 
-Addnewworker.addEventListener("click",()=>{
-    modalOverlay.style.display="flex"
-
-})
-closeModal.addEventListener("click",()=>{
-     modalOverlay.style.display="none"
+Addnewworker.addEventListener("click", () => {
+    modalOverlay.style.display = "flex"
 
 })
+closeModal.addEventListener("click", () => {
+    modalOverlay.style.display = "none"
+
+})
 
 
 
-function ExpDynamique(){
-    
-    AddExperiece.addEventListener("click",(e)=>{
+
+const ListEmploye = JSON.parse(localStorage.getItem("ListEmploye") || "[]")
+
+
+function ExpDynamique() {
+
+    AddExperiece.addEventListener("click", (e) => {
         e.preventDefault()
-    let Expprecedent = document.createElement('div')
-    Expprecedent.classList.add('Expperecedent')
-    Expprecedent.innerHTML=`<div class="group">
+        let Expprecedent = document.createElement('div')
+        Expprecedent.classList.add('Expperecedent')
+        Expprecedent.innerHTML = `<div class="group">
                         <label for="post">Nom de post</label>
                         <input id="post" class="post" required type="text" name="post">
                     </div>
@@ -52,12 +59,12 @@ function ExpDynamique(){
                     </div>  `
 
         ContainerExpe.appendChild(Expprecedent)
-     
-    const SuppExperience=Expprecedent.querySelector(".btnSupprimer")
-    SuppExperience.addEventListener("click",()=>{
-        Expprecedent.remove()
 
-    })
+        const SuppExperience = Expprecedent.querySelector(".btnSupprimer")
+        SuppExperience.addEventListener("click", () => {
+            Expprecedent.remove()
+
+        })
     })
 
 
@@ -65,11 +72,15 @@ function ExpDynamique(){
 
 
 ExpDynamique()
-function Afficherinfo(){
-    const InfoEmp=document.querySelector(".InfoEmp");
-    InfoEmp.innerHTML=ListEmploye.map(e=>
 
-        `  
+
+function Afficherinfo() {
+    const InfoEmp = document.querySelector(".InfoEmp");
+    InfoEmp.innerHTML = "";
+
+    ListEmploye.forEach(e => {
+        InfoEmp.insertAdjacentHTML("beforeend",
+            `  
         <div class="employe-card">
             <img alt="image" class="imgprofile" src="${e.img}">
             <div class="rolename">
@@ -77,70 +88,81 @@ function Afficherinfo(){
                 <h5>${e.role}</h5>
             </div>
         </div>
-        `
+        `);
+    });
 
-    ).join("")
-     
-
-
+    ZoneAj();
 }
 
 
 
-const ListEmploye=JSON.parse(localStorage.getItem("ListEmploye") ||"[]")
+
+
+
+
+
 Afficherinfo()
 
-function AjoutEmploye(){
-    
-  btnEnregistrer.addEventListener("click",(e)=>{
-     e.preventDefault();
-    const Employe={
-    nom:document.querySelector(".nom").value,
-    email:document.querySelector(".email").value,
-    tel:document.querySelector(".tel").value,
-    img:document.querySelector(".img").value,
-    role:document.querySelector("#role").value,
-    zone:"ussingned",
-    Expriences:[]
-    
-    }
-    const Allexp=ContainerExpe.querySelectorAll(".Expperecedent")
-    Allexp.forEach(e=>{
-        const Experience={
-        post:e.querySelector(".post").value,
-        Debut:e.querySelector(".Deb").value,
-        Fin:e.querySelector(".Fin").value,
-        Compagnie:e.querySelector(".Compangie").value,
-    }
-    Employe.Expriences.push(Experience);
+function AjoutEmploye() {
+
+    btnEnregistrer.addEventListener("click", (e) => {
+        e.preventDefault();
+        const Employe = {
+            nom: document.querySelector(".nom").value,
+            email: document.querySelector(".email").value,
+            tel: document.querySelector(".tel").value,
+            img: document.querySelector(".img").value || 'img/profile.png',
+            role: document.querySelector("#role").value,
+            zone: "ussingned",
+            Expriences: []
+
+        }
+        const Allexp = ContainerExpe.querySelectorAll(".Expperecedent")
+        Allexp.forEach(e => {
+            const Experience = {
+                post: e.querySelector(".post").value,
+                Debut: e.querySelector(".Deb").value,
+                Fin: e.querySelector(".Fin").value,
+                Compagnie: e.querySelector(".Compangie").value,
+            }
+            Employe.Expriences.push(Experience);
+
+        })
+
+        ListEmploye.push(Employe);
+        localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
+        Afficherinfo()
+        form.reset()
+        ContainerExpe.innerHTML = "";
+        modalOverlay.style.display = "none"
+
 
     })
-     
-    ListEmploye.push(Employe); 
-     localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
-      Afficherinfo()
-      form.reset()
-    ContainerExpe.innerHTML = "";
-     modalOverlay.style.display="none"
+    Afficherinfo()
 
-
-  })
-  Afficherinfo()
- 
 }
 AjoutEmploye()
 
 
-inputImg.addEventListener("input",()=>{
-    url=inputImg.value;
-    if(url===""){
-        previewImg.style.display="none"
-        previewImg.src=""
+
+inputImg.addEventListener("input", () => {
+    url = inputImg.value;
+    if (url === "") {
+        previewImg.style.display = "none"
+        previewImg.src = ""
         return;
-    }else{
-        previewImg.src=url;
-         previewImg.style.display = "block";
+    } else {
+        previewImg.src = url;
+        previewImg.style.display = "block";
     }
 
 
 })
+
+
+
+
+
+
+
+
