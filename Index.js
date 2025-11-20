@@ -290,33 +290,33 @@ inputImg.addEventListener("input", () => {
 
 
 
-    // //salle serveur
-    // document.querySelector("#salSer").addEventListener("click", () => {
-    //     const listSer = document.querySelector("#listSer");
-    //     listSer.style.display = "flex"
-    //     listSer.innerHTML = "";
+     //salle serveur
+     document.querySelector("#salSer").addEventListener("click", () => {
+         const listSer = document.querySelector("#listSer");
+        listSer.style.display = "flex"
+        listSer.innerHTML = "";
 
-    //     const ListServeurs = ListEmploye.filter(emp =>
-    //         emp.zone === "ussingned" && (emp.role === "Technicien-IT" || emp.role === "Manager" || emp.role === "nettoyage")
-    //     )
+        const ListServeurs = ListEmploye.filter(emp =>
+            emp.zone === "ussingned" && (emp.role === "Technicien-IT" || emp.role === "Manager" || emp.role === "nettoyage")
+         )
 
-    //     if (ListServeurs.length === 0) {
-    //         document.querySelector("#listSer").insertAdjacentHTML("beforeend", `<p>aucun</p>`)
-    //     } else {
-    //         ListServeurs.forEach(emp => {
-    //             listSer.insertAdjacentHTML("beforeend", `
-    //                 <div class="employe-card2">
-    //                     <img alt="image" class="imgprofile2" src="${emp.img}">
-    //                     <div class="rolename2">
-    //                         <h4>${emp.nom}</h4>
-    //                         <h5>${emp.role}</h5>
-    //                     </div>
-    //                 </div>
+         if (ListServeurs.length === 0) {
+             document.querySelector("#listSer").insertAdjacentHTML("beforeend", `<p>aucun</p>`)
+         } else {
+             ListServeurs.forEach(emp => {
+                 listSer.insertAdjacentHTML("beforeend", `
+                     <div class="employe-card2">
+                         <img alt="image" class="imgprofile2" src="${emp.img}">
+                         <div class="rolename2">
+                             <h4>${emp.nom}</h4>
+                             <h5>${emp.role}</h5>
+                         </div>
+                     </div>
             
-    //         `)
-    //         })
+             `)
+            })
 
-    //     }
+         }
     //     listArch.insertAdjacentHTML(
     //         "afterbegin",
     //         `<button class="closeSer">Fermer</button>`
