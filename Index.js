@@ -245,41 +245,41 @@ inputImg.addEventListener("input", () => {
             ;
     })
 
-    // //salle de conference   
+    //salle de conference   
 
-    // document.querySelector("#sallC").addEventListener("click", () => {
-    //     const ListC = document.querySelector("#listC")
-    //     ListC.style.display = "flex"
-    //     ListC.innerHTML = "";
-    //     const ListConference = ListEmploye.filter(emp => {
-    //         return emp.zone === "ussingned"
-    //     })
+    document.querySelector("#sallC").addEventListener("click", () => {
+        const ListC = document.querySelector("#listC")
+        ListC.style.display = "flex"
+         ListC.innerHTML = "";
+         const ListConference = ListEmploye.filter(emp => {
+             return emp.zone === "ussingned"
+         })
 
-    //     if (ListConference.length === 0) {
-    //         ListC.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
-    //     } else {
-    //         ListConference.forEach(emp => {
+        if (ListConference.length === 0) {
+            ListC.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
+        } else {
+            ListConference.forEach(emp => {
 
-    //             ListC.insertAdjacentHTML("beforeend", `
-    //                 <div class="employe-card2">
-    //                     <img alt="image" class="imgprofile2" src="${emp.img}">
-    //                     <div class="rolename2">
-    //                         <h4>${emp.nom}</h4>
-    //                         <h5>${emp.role}</h5>
-    //                     </div>
-    //                 </div>
+                ListC.insertAdjacentHTML("beforeend", `
+                    <div class="employe-card2">
+                        <img alt="image" class="imgprofile2" src="${emp.img}">
+                         <div class="rolename2">
+                             <h4>${emp.nom}</h4>
+                            <h5>${emp.role}</h5>
+                        </div>
+                    </div>
             
-    //         `)
-    //         })
+             `)
+             })
 
-    //         ListC.insertAdjacentHTML("afterbegin", `<button class="closeCon">Fermer</button>`);
-    //         const close = document.querySelector(".closeCon");
-    //         close.addEventListener("click", () => {
-    //             ListC.style.display = "none";
+            ListC.insertAdjacentHTML("afterbegin", `<button class="closeCon">Fermer</button>`);
+            const close = document.querySelector(".closeCon");
+            close.addEventListener("click", () => {
+                 ListC.style.display = "none";
 
-    //         })
-    //     }
-    // })
+            })
+        }
+    })
 
 
 
