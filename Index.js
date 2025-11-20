@@ -317,52 +317,52 @@ inputImg.addEventListener("input", () => {
             })
 
          }
-    //     listArch.insertAdjacentHTML(
-    //         "afterbegin",
-    //         `<button class="closeSer">Fermer</button>`
-    //     );
-    //     const close = document.querySelector(".closeSer");
-    //     close.addEventListener("click", () => {
-    //         listSer.style.display = "none";
+         listArch.insertAdjacentHTML(
+            "afterbegin",
+             `<button class="closeSer">Fermer</button>`
+        );
+        const close = document.querySelector(".closeSer");
+        close.addEventListener("click", () => {
+            listSer.style.display = "none";
 
-    //     })
-    // })
+        })
+    })
 
-    // //salle Archive
-    // document.querySelector("#sallAr").addEventListener("click", () => {
-    //     const listArch = document.querySelector("#listArch");
-    //     listArch.style.display = "flex"
-    //     listArch.innerHTML = "";
-    //     const ListArchive = ListEmploye.filter(emp =>
-    //         emp.zone === "ussingned" && emp.role != "nettoyage"
-    //     )
+    //salle Archive
+     document.querySelector("#sallAr").addEventListener("click", () => {
+         const listArch = document.querySelector("#listArch");
+        listArch.style.display = "flex"
+         listArch.innerHTML = "";
+        const ListArchive = ListEmploye.filter(emp =>
+            emp.zone === "ussingned" && emp.role != "nettoyage"
+        )
 
-    //     if (ListArchive.length === 0) {
-    //         listArch.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
-    //     } else {
-    //         ListArchive.forEach(emp => {
-    //             document.querySelector("#listArch").insertAdjacentHTML("beforeend", `
-    //                 <div class="employe-card2">
-    //                     <img alt="image" class="imgprofile2" src="${emp.img}">
-    //                     <div class="rolename2">
-    //                         <h4>${emp.nom}</h4>
-    //                         <h5>${emp.role}</h5>
-    //                     </div>
-    //                 </div>
+        if (ListArchive.length === 0) {
+             listArch.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
+        } else {
+            ListArchive.forEach(emp => {
+                 document.querySelector("#listArch").insertAdjacentHTML("beforeend", `
+                     <div class="employe-card2">
+                         <img alt="image" class="imgprofile2" src="${emp.img}">
+                        <div class="rolename2">
+                             <h4>${emp.nom}</h4>
+                            <h5>${emp.role}</h5>
+                        </div>
+                     </div>
             
-    //         `)
-    //         })
+            `)
+           })
 
-    //     }
-    //     listArch.insertAdjacentHTML(
-    //         "afterbegin",
-    //         `<button class="closeArch">Fermer</button>`
-    //     );
-    //     const close = listArch.querySelector(".closeArch");
-    //     close.addEventListener("click", () => {
-    //         listArch.style.display = "none";
-    //     });
-    // })
+         }
+         listArch.insertAdjacentHTML(
+            "afterbegin",
+             `<button class="closeArch">Fermer</button>`
+         );
+         const close = listArch.querySelector(".closeArch");
+        close.addEventListener("click", () => {
+            listArch.style.display = "none";
+         });
+     })
 
 
     // //salle de securite
