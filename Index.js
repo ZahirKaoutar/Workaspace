@@ -203,47 +203,47 @@ inputImg.addEventListener("input", () => {
     })
 
 
-    // //SALLE de personnel
+    //SALLE de personnel
 
 
-    // document.querySelector("#sallP").addEventListener("click", () => {
-    //     const listPer = document.querySelector("#listPer")
+     document.querySelector("#sallP").addEventListener("click", () => {
+         const listPer = document.querySelector("#listPer")
 
 
-    //     listPer.style.display = "flex"
-    //     listPer.innerHTML = "";
-    //     const ListPer = ListEmploye.filter(em => {
-    //         return em.zone === "ussingned"
-    //     })
+         listPer.style.display = "flex"
+         listPer.innerHTML = "";
+         const ListPer = ListEmploye.filter(em => {
+             return em.zone === "ussingned"
+         })
 
-    //     if (ListPer.length === 0) {
-    //         listPer.insertAdjacentHTML("beforeend", `   <p>aucun</p> `)
+        if (ListPer.length === 0) {
+         listPer.insertAdjacentHTML("beforeend", `   <p>aucun</p> `)
 
-    //     }
-    //     else {
-    //         ListPer.forEach(emp => {
+         }
+         else {
+             ListPer.forEach(emp => {
 
-    //             listPer.insertAdjacentHTML("beforeend", `
-    //                 <div class="employe-card2">
-    //                     <img alt="image" class="imgprofile2" src="${emp.img}">
-    //                     <div class="rolename2">
-    //                         <h4>${emp.nom}</h4>
-    //                         <h5>${emp.role}</h5>
-    //                     </div>
-    //                 </div>
+                listPer.insertAdjacentHTML("beforeend", `
+                    <div class="employe-card2">
+                         <img alt="image" class="imgprofile2" src="${emp.img}">
+                         <div class="rolename2">
+                             <h4>${emp.nom}</h4>
+                             <h5>${emp.role}</h5>
+                         </div>
+                     </div>
             
-    //         `)
-    //         }
-    //         )
-    //     }
-    //     listPer.insertAdjacentHTML("afterbegin", `<button class="closePer">Fermer</button>`);
-    //     const close = document.querySelector(".closePer");
-    //     close.addEventListener("click", () => {
-    //         listPer.style.display = "none";
+            `)
+            }
+             )
+         }
+         listPer.insertAdjacentHTML("afterbegin", `<button class="closePer">Fermer</button>`);
+         const close = document.querySelector(".closePer");
+         close.addEventListener("click", () => {
+            listPer.style.display = "none";
 
-    //     })
-    //         ;
-    // })
+        })
+            ;
+    })
 
     // //salle de conference   
 
