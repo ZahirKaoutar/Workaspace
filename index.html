@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,62 +8,121 @@
     <link rel="stylesheet" href="Style.css">
     <script src="Index.js" defer></script>
 </head>
-<body>
-     <header><h1>Gestion dees worpalce des employes</h1></header>
-   <main>
-    <section class="side1">
-            <section class="modalOverlay">
-                    <div class="modalBox">
-                        <span class="closeModal">&times;</span>
-                        <form action="">
-                            <div class="container">
-                                <div class="group">
-                                    <label for="img">Image</label>
-                                    <input id="img"  class="img" type="url" name="image" required>
-                                    <img id="previewImg" class="previewImg" src="" alt="Aucun aperçu">
-                                </div>
-                                <div class="group">
-                                    <label for="nom">Nom</label>
-                                    <input id="nom" class="nom" name="nom" type="text" required>
-                                </div>
-                                <div class="group">
-                                    <label for="email">Email</label>
-                                    <input  id="email"  name="email"  class="email" type="email" required>
-                                </div>
-                                 <div class="group">
-                                   <label for="tel">Telé</label>
-                                    <input type="tel" name="tel" id="tel" class="tel" required>
-                                </div>
-                                <div class="group">
-                                    <label for="role">Role</label>
-                                  
-                                     <select name="role" id="role"  required>
-                                        <option value="receptionnite">receptionnite</option>
-                                         <option value="nettoyage">nettoyage</option>
-                                        <option  value="Technicien-IT">Technicien IT</option>
-                                        <option value=" Agent-sécurité"> Agent de sécurité</option>
-                                        <option value="Manager"> Manager</option>
-                                        <option value="autre"> Autre</option>
-                                     </select>
-                                </div>
-                                <div class="group">
-                                    <button class="btnAjout">Ajouter une expérience</button>
-                                </div>
-                                
-                                <div class="expContainer">
-                                    
-                                </div>
-                                 <button  class ="submit" type="submit">Enregistrer</button>
-                                
-                            </div>
-                                
-                                
 
-                               
-                        </form>
-                    </div>
+<body>
+    <header>
+        <h1>Gestion dees worpalce des employes</h1>
+    </header>
+    <main>
+        <section class="side1">
+            <section class="modalOverlay">
+                <div class="modalBox">
+                    <span class="closeModal">&times;</span>
+                    <form action="">
+                        <div class="container">
+                            <div class="group">
+                                <label for="img">Image</label>
+                                <input id="img" class="img" type="url" name="image" required>
+                                <img id="previewImg" class="previewImg" src="" alt="Aucun aperçu">
+                            </div>
+                            <div class="group">
+                                <label for="nom">Nom</label>
+                                <input id="nom" class="nom" name="nom" type="text" required>
+                            </div>
+                            <div class="group">
+                                <label for="email">Email</label>
+                                <input id="email" name="email" class="email" type="email" required>
+                            </div>
+                            <div class="group">
+                                <label for="tel">Telé</label>
+                                <input type="tel" name="tel" id="tel" class="tel" required>
+                            </div>
+                            <div class="group">
+                                <label for="role">Role</label>
+
+                                <select name="role" id="role" required>
+                                    <option value="receptionnite">receptionnite</option>
+                                    <option value="nettoyage">nettoyage</option>
+                                    <option value="Technicien-IT">Technicien IT</option>
+                                    <option value=" Agent-sécurité"> Agent de sécurité</option>
+                                    <option value="Manager"> Manager</option>
+                                    <option value="autre"> Autre</option>
+                                </select>
+                            </div>
+                            <div class="group">
+                                <button class="btnAjout">Ajouter une expérience</button>
+                            </div>
+
+                            <div class="expContainer">
+
+                            </div>
+                            <button class="submit" type="submit">Enregistrer</button>
+
+                        </div>
+
+
+
+
+                    </form>
+                </div>
 
             </section>
+
+
+
+            <section class="modalOverlay2">
+                <div class="modalBox2">
+                    <span class="closeModal2">&times;</span>
+
+                    <div class="container1">
+                        <div class="group1">
+                           
+
+                            <img class="Img" src="">
+                        </div>
+                        <div class="group1">
+                            <span>Nom: </span>
+                            <span class="name1"></span>
+
+                        </div>
+                       
+                        <div class="group1">
+                            <span>Telé:  </span>
+                            <span class="tel1"></span>
+
+                        </div>
+                        <div class="group1">
+                            <span>email:  </span>
+                            <p class="email1"></p>
+
+                        </div>
+                        <div class="group1">
+                            <span>Role</span><span class="role"></p>
+
+
+                        </div>
+
+
+                        <div class="expContainer2">
+                            <ul id="list-experience">
+
+                            </ul>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+            </section>
+
+
 
 
             <section class="listEmployee">
@@ -71,69 +131,70 @@
             </section>
             <button class="addemployer">Ajouter un employé</button>
 
-    </section>
-    <section class="side2">
-        <!-- img absolute  -->
-       
-          <div class="ZonCont">
+        </section>
+        <section class="side2">
+            <!-- img absolute  -->
 
-            <div data-zone="conference" class="z-Conference">
-                <div  id="listC"class="ListZEmp"> </div>
+            <div class="ZonCont">
 
-                <div class="name-z">Salle de conference</div>
-                <button  id="sallC"class="plus">+</button>
-            </div>
+                <div data-zone="conference" class="z-Conference">
+                    <div id="listC" class="ListZEmp"> </div>
 
-            <div data-zone="reception" class="z-Réception">
-                
+                    <div class="name-z">Salle de conference</div>
+                    <button id="sallC" class="plus">+</button>
+                </div>
+
+                <div data-zone="reception" class="z-Réception">
+
                     <div id="listRec" class="ListZEmp"></div>
-                <div  class="name-z">Salle de reception</div>
-                <button  id="sallRec" class="plus">+</button>
-            </div>
+                    <div class="name-z">Salle de reception</div>
+                    <button id="sallRec" class="plus">+</button>
+                </div>
 
-            <div data-zone="serveur" class="z-serveurs">
-               
-                <div  id="listSer" class="ListZEmp"></div>
-                <div  class="name-z">Salle de Serveur</div>
-                <button id="salSer" class="plus">+</button>
-            </div>
+                <div data-zone="serveur" class="z-serveurs">
 
-            <div  data-zone="personnel" class="z-personnel">
-                
-                <div id="listPer"  class="ListZEmp"></div>
-                <div>Salle Personnel</div>
-                <button id="sallP" class="plus">+</button>
-            </div>
-            <div  data-zone="archives" class="z-archives">
-                    <div  id="listArch" class="ListZEmp">
-                        
-                
-            
+                    <div id="listSer" class="ListZEmp"></div>
+                    <div class="name-z">Salle de Serveur</div>
+                    <button id="salSer" class="plus">+</button>
+                </div>
+
+                <div data-zone="personnel" class="z-personnel">
+
+                    <div id="listPer" class="ListZEmp"></div>
+                    <div>Salle Personnel</div>
+                    <button id="sallP" class="plus">+</button>
+                </div>
+                <div data-zone="archives" class="z-archives">
+                    <div id="listArch" class="ListZEmp">
+
+
+
                     </div>
-                <div> Salle Archives </div>
-                <button id="sallAr" class="plus">+</button>
+                    <div> Salle Archives </div>
+                    <button id="sallAr" class="plus">+</button>
+                </div>
+                <div data-zone="securite" class="z-securite">
+
+                    <div id="listSec" class="ListZEmp"></div>
+
+                    <div> Salle Securite </div>
+
+                    <button id="sallSec" class="plus">+</button>
+                </div>
+
+
+
+
             </div>
-            <div  data-zone="securite" class="z-securite">
-
-                <div  id="listSec" class="ListZEmp"></div>
-  
-                <div> Salle Securite </div>
-
-                <button  id="sallSec" class="plus">+</button>
-            </div>
 
 
-            
 
-        </div> 
+        </section>
 
 
-       
- </section> 
- 
+    </main>
+    <footer></footer>
 
-   </main>
-   <footer></footer>
-    
 </body>
+
 </html>
