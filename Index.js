@@ -11,6 +11,32 @@ const btnEnregistrer = document.querySelector("button[type=submit]")
 
 
 
+function Colorzone() {
+    // const zoneSecurite=document.querySelector(".z-securite")
+    // const zoneServeur=document.querySelector(".z-serveurs")
+    // const zoneReception=document.querySelector(".z-Réception")
+    // const zonePersonnelle=document.querySelector(".z-personnel")
+    // const Conference =document.querySelector(".z-Conference")
+    // const Archives =document.querySelector("z-archive")
+    const x = document.querySelectorAll('[class^="z-"]')
+    Array.from(x).forEach(elem => {
+        const y = document.querySelectorAll(".employe-card2")
+        if (y.length === 0) {
+            elem.style.backgroundColor = "red";
+
+        } else {
+            elem.style.backgroundColor = " rgba(6, 133, 138, 0.4);"
+        }
+    })
+
+
+
+
+
+}
+
+
+
 let idEmp = JSON.parse(localStorage.getItem("CurrentId") || "1");
 
 
@@ -380,7 +406,7 @@ function ZoneAff() {
 
         if (ListArchive.length === 0) {
             listArch.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
-            document.querySelector(".z-archives").style.background="red"
+            document.querySelector(".z-archives").style.background = "red"
         } else {
             ListArchive.forEach(emp => {
                 document.querySelector("#listArch").insertAdjacentHTML("beforeend", `
@@ -457,8 +483,10 @@ function ZoneAff() {
 
 
 
-
 }
+// ----------------------------------->
+Colorzone()
+// ----------------------------------->
 
 
 
@@ -494,10 +522,11 @@ function Afficheprofile(id) {
           
         ${Empl.Expriences.map(e => {
 
-            
-           return `<div class="group"> Post :${e.post}</div>
+
+            return `<div class="group"> Post :${e.post}</div>
              <div class="group"> companige :${e.Compagnie}</div>
-              <div class="group"> nombre experience :${e.Fin - e.Deb}</div>`}
+              <div class="group"> nombre experience :${e.Fin - e.Deb}</div>`
+        }
 
 
         ).join("")} </div>`
@@ -507,3 +536,5 @@ function Afficheprofile(id) {
 
 
 }
+
+
