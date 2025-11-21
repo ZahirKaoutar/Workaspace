@@ -1,4 +1,5 @@
 const ContainerExpe = document.querySelector(".expContainer");
+const ContainerExpe2 = document.querySelector(".expContainer2");
 const form = document.querySelector("form")
 const ListempAff = document.querySelector("#listEmployee")
 
@@ -6,15 +7,19 @@ const AddExperiece = document.querySelector(".btnAjout");
 const Addnewworker = document.querySelector(".addemployer");
 const inputImg = document.querySelector("#img");
 const previewImg = document.querySelector("#previewImg");
+const btnEnregistrer = document.querySelector("button[type=submit]")
 
 
 
+let idEmp = JSON.parse(localStorage.getItem("CurrentId") || "1");
 
 
 const modalOverlay = document.querySelector(".modalOverlay");
-
 const closeModal = document.querySelector(".closeModal");
-const btnEnregistrer = document.querySelector(".submit")
+
+const modalOverlay2 = document.querySelector(".modalOverlay2");
+const closeModal2 = document.querySelector(".closeModal2");
+
 
 Addnewworker.addEventListener("click", () => {
     modalOverlay.style.display = "flex"
@@ -22,13 +27,43 @@ Addnewworker.addEventListener("click", () => {
 })
 closeModal.addEventListener("click", () => {
     modalOverlay.style.display = "none"
+    ContainerExpe.style.display = "none"
+
 
 })
 
 
 
+document.querySelectorAll(".employe-card").forEach(card => {
+    card.addEventListener("click", () => {
+        modalOverlay2.style.display = "flex";
+
+
+    });
+});
+closeModal2.addEventListener("click", () => {
+    modalOverlay2.style.display = "none"
+
+
+
+})
+document.querySelectorAll(".employe-card").forEach(card => {
+    card.addEventListener("click", () => {
+        modalOverlay2.style.display = "flex";
+
+
+    });
+});
+
+
+
+
+
+
 
 const ListEmploye = JSON.parse(localStorage.getItem("ListEmploye") || "[]")
+
+
 
 
 function ExpDynamique() {
@@ -79,9 +114,11 @@ function Afficherinfo() {
     InfoEmp.innerHTML = "";
 
     ListEmploye.forEach(e => {
+        console.log(e.idEmp)
         InfoEmp.insertAdjacentHTML("beforeend",
             `  
-        <div class="employe-card">
+        <div   class="employe-card" onclick="Afficheprofile(${e.idEmp})">
+        
             <img alt="image" class="imgprofile" src="${e.img}">
             <div class="rolename">
                 <h4>${e.nom}</h4>
@@ -91,7 +128,8 @@ function Afficherinfo() {
         `);
     });
 
-   ZoneAff()
+    ZoneAff()
+
 }
 
 
@@ -108,6 +146,7 @@ function AjoutEmploye() {
     btnEnregistrer.addEventListener("click", (e) => {
         e.preventDefault();
         const Employe = {
+            idEmp: ++idEmp,
             nom: document.querySelector(".nom").value,
             email: document.querySelector(".email").value,
             tel: document.querySelector(".tel").value,
@@ -131,6 +170,7 @@ function AjoutEmploye() {
 
         ListEmploye.push(Employe);
         localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
+        localStorage.setItem("CurrentId", JSON.stringify(Employe.idEmp));
         Afficherinfo()
         form.reset()
         ContainerExpe.innerHTML = "";
@@ -163,7 +203,7 @@ inputImg.addEventListener("input", () => {
 
 
 
- function ZoneAff() {
+function ZoneAff() {
     //salle reception
 
     document.querySelector("#sallRec").addEventListener("click", () => {
@@ -172,14 +212,15 @@ inputImg.addEventListener("input", () => {
 
         listRec.style.display = "flex"
         listRec.innerHTML = "";
-        const ListRec = ListEmploye.filtre((emp) => { return emp.zone === "ussingned" && (emp.role === "receptionnite" || emp.role === "Manager" || emp.role === "nettoyage") })
+        const ListRec = ListEmploye.filter((emp) => { return emp.zone === "ussingned" && (emp.role === "receptionnite" || emp.role === "Manager" || emp.role === "nettoyage") })
+        console.log(ListRec)
         if (ListRec.length === 0) {
             listRec.insertAdjacentElement("beforeend", '<p>aucun</p>')
         }
         else {
             ListEmploye.forEach(emp => {
 
-                document.querySelector("#listRec").insertAdjacentHTML("beforeend", `
+                listRec.insertAdjacentHTML("beforeend", `
                     <div class="employe-card2">
                         <img alt="image" class="imgprofile2" src="${emp.img}">
                         <div class="rolename2">
@@ -206,22 +247,22 @@ inputImg.addEventListener("input", () => {
     //SALLE de personnel
 
 
-     document.querySelector("#sallP").addEventListener("click", () => {
-         const listPer = document.querySelector("#listPer")
+    document.querySelector("#sallP").addEventListener("click", () => {
+        const listPer = document.querySelector("#listPer")
 
 
-         listPer.style.display = "flex"
-         listPer.innerHTML = "";
-         const ListPer = ListEmploye.filter(em => {
-             return em.zone === "ussingned"
-         })
+        listPer.style.display = "flex"
+        listPer.innerHTML = "";
+        const ListPer = ListEmploye.filter(em => {
+            return em.zone === "ussingned"
+        })
 
         if (ListPer.length === 0) {
-         listPer.insertAdjacentHTML("beforeend", `   <p>aucun</p> `)
+            listPer.insertAdjacentHTML("beforeend", `   <p>aucun</p> `)
 
-         }
-         else {
-             ListPer.forEach(emp => {
+        }
+        else {
+            ListPer.forEach(emp => {
 
                 listPer.insertAdjacentHTML("beforeend", `
                     <div class="employe-card2">
@@ -234,11 +275,11 @@ inputImg.addEventListener("input", () => {
             
             `)
             }
-             )
-         }
-         listPer.insertAdjacentHTML("afterbegin", `<button class="closePer">Fermer</button>`);
-         const close = document.querySelector(".closePer");
-         close.addEventListener("click", () => {
+            )
+        }
+        listPer.insertAdjacentHTML("afterbegin", `<button class="closePer">Fermer</button>`);
+        const close = document.querySelector(".closePer");
+        close.addEventListener("click", () => {
             listPer.style.display = "none";
 
         })
@@ -250,10 +291,10 @@ inputImg.addEventListener("input", () => {
     document.querySelector("#sallC").addEventListener("click", () => {
         const ListC = document.querySelector("#listC")
         ListC.style.display = "flex"
-         ListC.innerHTML = "";
-         const ListConference = ListEmploye.filter(emp => {
-             return emp.zone === "ussingned"
-         })
+        ListC.innerHTML = "";
+        const ListConference = ListEmploye.filter(emp => {
+            return emp.zone === "ussingned"
+        })
 
         if (ListConference.length === 0) {
             ListC.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
@@ -270,12 +311,12 @@ inputImg.addEventListener("input", () => {
                     </div>
             
              `)
-             })
+            })
 
             ListC.insertAdjacentHTML("afterbegin", `<button class="closeCon">Fermer</button>`);
             const close = document.querySelector(".closeCon");
             close.addEventListener("click", () => {
-                 ListC.style.display = "none";
+                ListC.style.display = "none";
 
             })
         }
@@ -290,21 +331,21 @@ inputImg.addEventListener("input", () => {
 
 
 
-     //salle serveur
-     document.querySelector("#salSer").addEventListener("click", () => {
-         const listSer = document.querySelector("#listSer");
+    //salle serveur
+    document.querySelector("#salSer").addEventListener("click", () => {
+        const listSer = document.querySelector("#listSer");
         listSer.style.display = "flex"
         listSer.innerHTML = "";
 
         const ListServeurs = ListEmploye.filter(emp =>
             emp.zone === "ussingned" && (emp.role === "Technicien-IT" || emp.role === "Manager" || emp.role === "nettoyage")
-         )
+        )
 
-         if (ListServeurs.length === 0) {
-             document.querySelector("#listSer").insertAdjacentHTML("beforeend", `<p>aucun</p>`)
-         } else {
-             ListServeurs.forEach(emp => {
-                 listSer.insertAdjacentHTML("beforeend", `
+        if (ListServeurs.length === 0) {
+            document.querySelector("#listSer").insertAdjacentHTML("beforeend", `<p>aucun</p>`)
+        } else {
+            ListServeurs.forEach(emp => {
+                listSer.insertAdjacentHTML("beforeend", `
                      <div class="employe-card2">
                          <img alt="image" class="imgprofile2" src="${emp.img}">
                          <div class="rolename2">
@@ -316,10 +357,10 @@ inputImg.addEventListener("input", () => {
              `)
             })
 
-         }
-         listArch.insertAdjacentHTML(
+        }
+        listSer.insertAdjacentHTML(
             "afterbegin",
-             `<button class="closeSer">Fermer</button>`
+            `<button class="closeSer">Fermer</button>`
         );
         const close = document.querySelector(".closeSer");
         close.addEventListener("click", () => {
@@ -329,19 +370,20 @@ inputImg.addEventListener("input", () => {
     })
 
     //salle Archive
-     document.querySelector("#sallAr").addEventListener("click", () => {
-         const listArch = document.querySelector("#listArch");
+    document.querySelector("#sallAr").addEventListener("click", () => {
+        const listArch = document.querySelector("#listArch");
         listArch.style.display = "flex"
-         listArch.innerHTML = "";
+        listArch.innerHTML = "";
         const ListArchive = ListEmploye.filter(emp =>
             emp.zone === "ussingned" && emp.role != "nettoyage"
         )
 
         if (ListArchive.length === 0) {
-             listArch.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
+            listArch.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
+            document.querySelector(".z-archives").style.background="red"
         } else {
             ListArchive.forEach(emp => {
-                 document.querySelector("#listArch").insertAdjacentHTML("beforeend", `
+                document.querySelector("#listArch").insertAdjacentHTML("beforeend", `
                      <div class="employe-card2">
                          <img alt="image" class="imgprofile2" src="${emp.img}">
                         <div class="rolename2">
@@ -351,18 +393,18 @@ inputImg.addEventListener("input", () => {
                      </div>
             
             `)
-           })
+            })
 
-         }
-         listArch.insertAdjacentHTML(
+        }
+        listArch.insertAdjacentHTML(
             "afterbegin",
-             `<button class="closeArch">Fermer</button>`
-         );
-         const close = listArch.querySelector(".closeArch");
+            `<button class="closeArch">Fermer</button>`
+        );
+        const close = listArch.querySelector(".closeArch");
         close.addEventListener("click", () => {
             listArch.style.display = "none";
-         });
-     })
+        });
+    })
 
 
     //salle de securite
@@ -379,6 +421,7 @@ inputImg.addEventListener("input", () => {
 
         if (ListSecu.length === 0) {
             listSec.insertAdjacentHTML("beforeend", `<p>aucun</p>`);
+            // document.querySelector(".z-securite").style.background="red"
         } else {
             ListSecu.forEach(emp => {
                 listSec.insertAdjacentHTML("beforeend", `
@@ -418,3 +461,49 @@ inputImg.addEventListener("input", () => {
 }
 
 
+
+function Afficheprofile(id) {
+    const Empl = ListEmploye.find(e => {
+        return e.idEmp === id
+    })
+    const url = document.querySelector(".Img")
+    url.src = Empl.img
+    const name = document.querySelector(".name1")
+    const tele = document.querySelector(".tel1")
+    const role = document.querySelector(".role")
+    const email = document.querySelector(".email1")
+
+    name.textContent = Empl.nom
+    tele.textContent = Empl.tel
+    role.textContent = Empl.role
+
+    email.textContent = Empl.email
+
+    modalOverlay2.style.display = "flex";
+
+    if (Empl.Expriences.length === 0) {
+
+        ContainerExpe2.style.display = "none"
+
+
+    } else {
+
+        ContainerExpe2.innerHTML = `
+      
+        <div class="Expperecedent">
+          
+        ${Empl.Expriences.map(e => {
+
+            
+           return `<div class="group"> Post :${e.post}</div>
+             <div class="group"> companige :${e.Compagnie}</div>
+              <div class="group"> nombre experience :${e.Fin - e.Deb}</div>`}
+
+
+        ).join("")} </div>`
+
+
+    }
+
+
+}
