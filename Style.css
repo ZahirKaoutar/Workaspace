@@ -419,7 +419,49 @@ form button {
         align-items: center;
         
         gap:10px
-    }
+}
+.Reception{
+    display:grid;
+    grid-template-columns: repeat(40px, 3);
+    grid-template-rows: 20px;
+
+
+}
+.Serveur{
+    display:grid;
+    grid-template-columns: repeat(40px, 2);
+    grid-template-rows: 20px;
+
+
+}
+.Archives{
+    display:grid;
+    grid-template-columns: repeat(40px, 4);
+    grid-template-rows: 20px;
+
+
+}
+.Securite{
+    display:grid;
+    grid-template-columns: repeat(40px, 3);
+    grid-template-rows: 20px;
+
+
+}
+.Conference{
+    display:grid;
+    grid-template-columns: repeat(40px, 8);
+    grid-template-rows: 20px;
+
+
+}
+.imgprofil-z{
+    width:20px;
+    height: 20px;
+    border-radius: 20px;
+    
+}
+
 
 
 @media (max-width: 1024px) {
@@ -598,6 +640,10 @@ form button {
         height: 80px;
         margin-left: 0;
     }
+}
+
+.z-Conference , .z-personnel{
+    background-color: rgba(0,128,0,0.5);
 }
 
 

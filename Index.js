@@ -109,31 +109,56 @@ function ExpDynamique() {
 ExpDynamique()
 
 
+// function Afficherinfo() {
+//     const InfoEmp = document.querySelector(".InfoEmp");
+//     InfoEmp.innerHTML = "";
+//     const listUnssigned =ListEmploye.filter((e)=>{
+//        return  e.zone==="ussingned"
+//     })
+
+//     listUnssigned.forEach(e => {
+        
+//         InfoEmp.insertAdjacentHTML("beforeend",
+//             `  
+//         <div   class="employe-card" onclick="Afficheprofile(${e.idEmp})">
+        
+//             <img alt="image" class="imgprofile" src="${e.img}">
+//             <div class="rolename">
+//                 <h4>${e.nom}</h4>
+//                 <h5>${e.role}</h5>
+//             </div>
+//         </div>
+//         `);
+//     });
+
+//     ZoneAff()
+
+// }
+
+
+
 function Afficherinfo() {
     const InfoEmp = document.querySelector(".InfoEmp");
     InfoEmp.innerHTML = "";
 
-    ListEmploye.forEach(e => {
-        console.log(e.idEmp)
+    const listUnssigned = ListEmploye.filter(e => e.zone === "ussingned");
+
+    listUnssigned.forEach(e => {
         InfoEmp.insertAdjacentHTML("beforeend",
             `  
-        <div   class="employe-card" onclick="Afficheprofile(${e.idEmp})">
-        
-            <img alt="image" class="imgprofile" src="${e.img}">
+        <div class="employe-card" onclick="Afficheprofile(${e.idEmp})">
+
+            <img alt="image" class="imgprofile" src="${e?.img || 'img/profile.png'}">
             <div class="rolename">
-                <h4>${e.nom}</h4>
-                <h5>${e.role}</h5>
+                <h4>${e.nom||"inconnue"}</h4>
+                <h5>${e.role||"inconnue"}</h5>
             </div>
         </div>
         `);
     });
 
-    ZoneAff()
-
+    ZoneAff(); // إعادة تهيئة الزونات
 }
-
-
-
 
 
 
@@ -215,10 +240,10 @@ function ZoneAff() {
         const ListRec = ListEmploye.filter((emp) => { return emp.zone === "ussingned" && (emp.role === "receptionnite" || emp.role === "Manager" || emp.role === "nettoyage") })
         console.log(ListRec)
         if (ListRec.length === 0) {
-            listRec.insertAdjacentElement("beforeend", '<p>aucun</p>')
+            listRec.insertAdjacentHTML("beforeend", '<p>aucun</p>')
         }
         else {
-            ListEmploye.forEach(emp => {
+            ListRec.forEach(emp => {
 
                 listRec.insertAdjacentHTML("beforeend", `
                     <div class="employe-card2">
@@ -230,6 +255,11 @@ function ZoneAff() {
                     </div>
             
             `)
+                let card = listRec.lastElementChild;
+                card.addEventListener("click", () => {
+                    AjoutEmployeDansLazone(emp, "reception", ".Reception", card)
+
+                })
             }
 
             )
@@ -274,6 +304,11 @@ function ZoneAff() {
                      </div>
             
             `)
+                let card = listPer.lastElementChild;
+                card.addEventListener("click", () => {
+                    AjoutEmployeDansLazone(emp, "personnel", ".Personnel", card)
+
+                })
             }
             )
         }
@@ -311,6 +346,13 @@ function ZoneAff() {
                     </div>
             
              `)
+              let card = ListC.lastElementChild;
+                card.addEventListener("click", () => {
+                    AjoutEmployeDansLazone(emp, "conference", ".Conference", card)
+
+
+                })
+
             })
 
             ListC.insertAdjacentHTML("afterbegin", `<button class="closeCon">Fermer</button>`);
@@ -332,7 +374,7 @@ function ZoneAff() {
 
 
     //salle serveur
-    document.querySelector("#salSer").addEventListener("click", () => {
+    document.querySelector("#sallSer").addEventListener("click", () => {
         const listSer = document.querySelector("#listSer");
         listSer.style.display = "flex"
         listSer.innerHTML = "";
@@ -355,6 +397,11 @@ function ZoneAff() {
                      </div>
             
              `)
+              let card = listSer.lastElementChild;
+                card.addEventListener("click", () => {
+                    AjoutEmployeDansLazone(emp, "serveur", ".Serveur", card)
+
+                })
             })
 
         }
@@ -380,7 +427,7 @@ function ZoneAff() {
 
         if (ListArchive.length === 0) {
             listArch.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
-            document.querySelector(".z-archives").style.background="red"
+            
         } else {
             ListArchive.forEach(emp => {
                 document.querySelector("#listArch").insertAdjacentHTML("beforeend", `
@@ -393,6 +440,11 @@ function ZoneAff() {
                      </div>
             
             `)
+             let card = listArch.lastElementChild;
+                card.addEventListener("click", () => {
+                    AjoutEmployeDansLazone(emp, "archive", ".Archives", card)
+
+                })
             })
 
         }
@@ -421,7 +473,7 @@ function ZoneAff() {
 
         if (ListSecu.length === 0) {
             listSec.insertAdjacentHTML("beforeend", `<p>aucun</p>`);
-            // document.querySelector(".z-securite").style.background="red"
+            
         } else {
             ListSecu.forEach(emp => {
                 listSec.insertAdjacentHTML("beforeend", `
@@ -433,6 +485,11 @@ function ZoneAff() {
                     </div>
                 </div>
             `);
+             let card = listSec.lastElementChild;
+                card.addEventListener("click", () => {
+                    AjoutEmployeDansLazone(emp, "securite", ".Securite", card)
+
+                })
             });
         }
 
@@ -463,6 +520,7 @@ function ZoneAff() {
 
 
 function Afficheprofile(id) {
+    id = Number(id);
     const Empl = ListEmploye.find(e => {
         return e.idEmp === id
     })
@@ -494,10 +552,11 @@ function Afficheprofile(id) {
           
         ${Empl.Expriences.map(e => {
 
-            
-           return `<div class="group"> Post :${e.post}</div>
+
+            return `<div class="group"> Post :${e.post}</div>
              <div class="group"> companige :${e.Compagnie}</div>
-              <div class="group"> nombre experience :${e.Fin - e.Deb}</div>`}
+              <div class="group"> nombre experience :${e.Fin - e.Deb}</div>`
+        }
 
 
         ).join("")} </div>`
@@ -506,4 +565,159 @@ function Afficheprofile(id) {
     }
 
 
+
 }
+
+
+
+
+
+
+
+
+const capaciteZone = {
+    conference: 8,
+    reception: 3,
+    serveur: 2,
+    personnel: 6,
+    archive: 4,
+    securite: 3
+};
+
+
+function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
+    const zone = document.querySelector(zoneSelector);
+
+
+    const occupants = zone.querySelectorAll(".emp-wrapper").length;
+    const max = capaciteZone[zoneName];
+
+    if (occupants >= max) {
+        alert(`La zone ${zoneName} est pleine (${max}/${max})`);
+        return;
+    }
+
+    
+    emp.zone = zoneName;
+    localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
+
+    // Création du wrapper
+    const wrapper = document.createElement("div");
+    wrapper.className = "emp-wrapper";
+
+    const newImg = document.createElement("img");
+    newImg.className = "imgprofil-z";
+    newImg.src = emp.img;
+    newImg.alt = emp.nom;
+    newImg.id = emp.idEmp;
+
+    newImg.addEventListener("click", () => {
+        Afficheprofile(newImg.id);
+    });
+
+    const btnRemove = document.createElement("button");
+    btnRemove.textContent = "X";
+    btnRemove.className = "btn-remove-zone";
+    btnRemove.addEventListener("click", () => {
+        
+        emp.zone = "ussingned";
+        localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
+        renderZones();
+        Afficherinfo(); 
+
+        
+        const zonesBtns = ["#sallRec","#sallP","#sallC","#sallSer","#sallAr","#sallSec"];
+        zonesBtns.forEach(z => {
+            const list = document.querySelector(z.replace("#sall","#list"));
+            if(list && list.style.display === "flex"){
+                document.querySelector(z).click(); 
+            }
+        });
+    });
+
+    wrapper.appendChild(newImg);
+    wrapper.appendChild(btnRemove);
+    zone.appendChild(wrapper);
+
+    if(cardElement) cardElement.remove();
+
+    
+    Afficherinfo();
+
+    colorierToutesLesZones();
+}
+
+
+function renderZones() {
+    const zones = {
+        conference: document.querySelector(".Conference"),
+        reception: document.querySelector(".Reception"),
+        serveur: document.querySelector(".Serveur"),
+        personnel: document.querySelector(".Personnel"),
+        archive: document.querySelector(".Archives"),
+        securite: document.querySelector(".Securite")
+    };
+
+   
+    Object.values(zones).forEach(z => z.innerHTML = "");
+
+    ListEmploye.forEach(emp => {
+        if (!emp.zone || emp.zone === "ussingned") return;
+
+        const zoneDiv = zones[emp.zone];
+        if (!zoneDiv) return;
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "emp-wrapper";
+
+        const newImg = document.createElement("img");
+        newImg.src = emp.img;
+        newImg.className = "imgprofil-z";
+        newImg.addEventListener("click", () => Afficheprofile(emp.idEmp));
+
+        const btnRemove = document.createElement("button");
+        btnRemove.textContent = "X";
+        btnRemove.className = "btn-remove-zone";
+        btnRemove.addEventListener("click", () => {
+            emp.zone = "ussingned";
+            localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
+            renderZones();
+            Afficherinfo();
+        });
+
+        wrapper.appendChild(newImg);
+        wrapper.appendChild(btnRemove);
+        zoneDiv.appendChild(wrapper);
+    });
+
+    colorierToutesLesZones();
+}
+
+function colorierZone(zoneSelector) {
+    const zone = document.querySelector(zoneSelector);
+    const parent = zone.parentElement;
+    const count = zone.querySelectorAll(".emp-wrapper").length;
+    parent.style.backgroundColor = count > 0 ? "rgba(0,128,0,0.5)" : "rgba(255,0,0,0.5)";
+
+}
+
+function colorierToutesLesZones() {
+   
+    colorierZone(".Reception");
+    colorierZone(".Serveur");
+   
+    colorierZone(".Archives");
+    colorierZone(".Securite");
+}
+
+renderZones();
+colorierToutesLesZones();
+
+
+
+
+
+
+
+
+
