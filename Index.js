@@ -70,12 +70,15 @@ const ListEmploye = JSON.parse(localStorage.getItem("ListEmploye") || "[]")
 
 
 function ExpDynamique() {
+    ContainerExpe.style.display="none"
 
     AddExperiece.addEventListener("click", (e) => {
         e.preventDefault()
+        ContainerExpe.style.display="flex"
         let Expprecedent = document.createElement('div')
         Expprecedent.classList.add('Expperecedent')
-        Expprecedent.innerHTML = `<div class="group">
+        Expprecedent.innerHTML = `
+                    <div class="group">
                         <label for="post">Nom de post</label>
                         <input id="post" class="post" required type="text" name="post">
                     </div>
@@ -100,6 +103,7 @@ function ExpDynamique() {
 
         const SuppExperience = Expprecedent.querySelector(".btnSupprimer")
         SuppExperience.addEventListener("click", () => {
+            ContainerExpe.style.display="none"
             Expprecedent.remove()
 
         })
@@ -151,20 +155,17 @@ function Afficherinfo() {
             `  
         <div class="employe-card" onclick="Afficheprofile(${e.idEmp})">
 
-            <img alt="image" class="imgprofile" src="${e?.img || 'img/profile.png'}">
+            <img alt="image" class="imgprofile" src="${e.img || 'img/profile.png'}">
             <div class="rolename">
-                <h4>${e.nom||"inconnue"}</h4>
-                <h5>${e.role||"inconnue"}</h5>
+                <h4>${e.nom}</h4>
+                <h5>${e.role}</h5>
             </div>
         </div>
         `);
     });
 
-    ZoneAff(); // إعادة تهيئة الزونات
+    ZoneAff(); 
 }
-
-
-
 
 
 Afficherinfo()
@@ -201,12 +202,13 @@ function AjoutEmploye() {
         localStorage.setItem("CurrentId", JSON.stringify(Employe.idEmp));
         Afficherinfo()
         form.reset()
+        resetPreview()
         ContainerExpe.innerHTML = "";
         modalOverlay.style.display = "none"
 
 
     })
-    Afficherinfo()
+    // Afficherinfo()
 
 }
 AjoutEmploye()
@@ -226,6 +228,11 @@ inputImg.addEventListener("input", () => {
 
 
 })
+function resetPreview() {
+    previewImg.src = "";
+    previewImg.style.display = "none";
+}
+
 
 
 
@@ -241,7 +248,7 @@ function ZoneAff() {
         listRec.style.display = "flex"
         listRec.innerHTML = "";
         const ListRec = ListEmploye.filter((emp) => { return emp.zone === "ussingned" && (emp.role === "receptionnite" || emp.role === "Manager" || emp.role === "nettoyage") })
-        console.log(ListRec)
+       
         if (ListRec.length === 0) {
             listRec.insertAdjacentHTML("beforeend", '<p>aucun</p>')
         }
@@ -473,7 +480,7 @@ function ZoneAff() {
 
         const ListSecu = ListEmploye.filter(emp =>
             emp.zone === "ussingned" &&
-            (emp.role === "Agent-sécurité" || emp.role === "nettoyage")
+            (emp.role === " Agent-sécurité" || emp.role === "nettoyage")
         );
 
         if (ListSecu.length === 0) {
@@ -592,7 +599,9 @@ const capaciteZone = {
 function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
     const zone = document.querySelector(zoneSelector);
 
-
+      // Création du wrapper
+    const wrapper = document.createElement("div");
+    wrapper.className = "emp-wrapper";
     const occupants = zone.querySelectorAll(".emp-wrapper").length;
     const max = capaciteZone[zoneName];
 
@@ -605,18 +614,16 @@ function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
     emp.zone = zoneName;
     localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
 
-    // Création du wrapper
-    const wrapper = document.createElement("div");
-    wrapper.className = "emp-wrapper";
+  
 
     const newImg = document.createElement("img");
     newImg.className = "imgprofil-z";
     newImg.src = emp.img;
     newImg.alt = emp.nom;
-    newImg.id = emp.idEmp;
+    // newImg.id = emp.idEmp;
 
     newImg.addEventListener("click", () => {
-        Afficheprofile(newImg.id);
+        Afficheprofile(emp.idEmp);
     });
 
     const btnRemove = document.createElement("button");
