@@ -8,10 +8,31 @@ const Addnewworker = document.querySelector(".addemployer");
 const inputImg = document.querySelector("#img");
 const previewImg = document.querySelector("#previewImg");
 const btnEnregistrer = document.querySelector("button[type=submit]")
+let i = 0;
+let numexper = 0;
 
 
 
 
+const regexNom = /^[a-zA-ZÀ-ÿ\s'-]{2,}$/; 
+
+
+const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+const regexTel = /^[0-9]{8,15}$/; 
+
+function verifierDatesExp() {
+    const experiences = document.querySelectorAll('.expContainer .experience');
+    for (let exp of experiences) {
+        const debut = exp.querySelector('.dateDebut').value;
+        const fin = exp.querySelector('.dateFin').value;
+
+        if (new Date(debut) > new Date(fin)) {
+            alert('La date de début doit être antérieure à la date de fin.');
+            return false;
+        }
+    }
+    return true;
+}
 
 
 let idEmp = JSON.parse(localStorage.getItem("CurrentId") || "1");
@@ -31,7 +52,11 @@ Addnewworker.addEventListener("click", () => {
 closeModal.addEventListener("click", () => {
     modalOverlay.style.display = "none"
     ContainerExpe.style.display = "none"
-
+    form.reset()
+     resetPreview()
+    document.querySelectorAll(".error").forEach(function(e){
+        e.style.display = "none"
+    })
 
 })
 
@@ -50,13 +75,7 @@ closeModal2.addEventListener("click", () => {
 
 
 })
-document.querySelectorAll(".employe-card").forEach(card => {
-    card.addEventListener("click", () => {
-        modalOverlay2.style.display = "flex";
 
-
-    });
-});
 
 
 
@@ -70,17 +89,26 @@ const ListEmploye = JSON.parse(localStorage.getItem("ListEmploye") || "[]")
 
 
 function ExpDynamique() {
-    ContainerExpe.style.display="none"
+    ContainerExpe.style.display = "none"
+    let i=0;
 
     AddExperiece.addEventListener("click", (e) => {
         e.preventDefault()
-        ContainerExpe.style.display="flex"
+        ContainerExpe.style.display = "flex"
         let Expprecedent = document.createElement('div')
         Expprecedent.classList.add('Expperecedent')
+       numexper++;
+
+
         Expprecedent.innerHTML = `
+           <div class="ex">
+                    <h4>Experience</h4>
+           
                     <div class="group">
                         <label for="post">Nom de post</label>
                         <input id="post" class="post" required type="text" name="post">
+
+                        
                     </div>
                      <div class="group">
                         <label for="periodeDeb">Date debut</label>
@@ -95,18 +123,23 @@ function ExpDynamique() {
                         <input id="nameCompangie" class="Compangie" required type="text" name="nameCompangie">
                     </div>
                     <div>
+
                         <button class="btnSupprimer">Supprimer</button>
                         
-                    </div>  `
+                    </div>  
+                </div>`
+
 
         ContainerExpe.appendChild(Expprecedent)
+        i++;
 
         const SuppExperience = Expprecedent.querySelector(".btnSupprimer")
         SuppExperience.addEventListener("click", () => {
-            ContainerExpe.style.display="none"
+
             Expprecedent.remove()
 
         })
+
     })
 
 
@@ -116,31 +149,6 @@ function ExpDynamique() {
 ExpDynamique()
 
 
-// function Afficherinfo() {
-//     const InfoEmp = document.querySelector(".InfoEmp");
-//     InfoEmp.innerHTML = "";
-//     const listUnssigned =ListEmploye.filter((e)=>{
-//        return  e.zone==="ussingned"
-//     })
-
-//     listUnssigned.forEach(e => {
-        
-//         InfoEmp.insertAdjacentHTML("beforeend",
-//             `  
-//         <div   class="employe-card" onclick="Afficheprofile(${e.idEmp})">
-        
-//             <img alt="image" class="imgprofile" src="${e.img}">
-//             <div class="rolename">
-//                 <h4>${e.nom}</h4>
-//                 <h5>${e.role}</h5>
-//             </div>
-//         </div>
-//         `);
-//     });
-
-//     ZoneAff()
-
-// }
 
 
 
@@ -164,15 +172,31 @@ function Afficherinfo() {
         `);
     });
 
-    ZoneAff(); 
+    ZoneAff();
 }
 
 
 Afficherinfo()
 
+
+function verifierDatesExp() {
+    const experiences = document.querySelectorAll('.expContainer .Expperecedent');
+    for (let exp of experiences) {
+        const debut = exp.querySelector('.Deb').value;
+        const fin = exp.querySelector('.Fin').value;
+
+        if (new Date(debut) > new Date(fin)) {
+            return false; 
+        }
+    }
+    return true;
+}
+
+
 function AjoutEmploye() {
 
     btnEnregistrer.addEventListener("click", (e) => {
+        
         e.preventDefault();
         const Employe = {
             idEmp: ++idEmp,
@@ -185,6 +209,38 @@ function AjoutEmploye() {
             Expriences: []
 
         }
+
+
+        document.querySelectorAll(".error").forEach(e => e.textContent = "");
+
+        let valid = true;
+
+        if (!regexNom.test(nom.value)) {
+            document.querySelector(".nom-error").textContent = "Nom invalide (minimum 2 lettres)";
+            valid = false;
+        }
+
+        if (!regexEmail.test(email.value)) {
+            document.querySelector(".email-error").textContent = "Email invalide";
+            valid = false;
+        }
+
+        if (!regexTel.test(tel.value)) {
+            document.querySelector(".tel-error").textContent = "Téléphone invalide (8 à 15 chiffres)";
+            valid = false;
+        }
+        
+
+        if (!verifierDatesExp()) {
+           
+            document.querySelector(".expContainer").insertAdjacentHTML("beforeend",
+                `<span class="error exp-error">La date de début doit être antérieure à la date de fin.</span>`
+            );
+            valid = false;
+        }
+    
+
+        if (!valid) return;
         const Allexp = ContainerExpe.querySelectorAll(".Expperecedent")
         Allexp.forEach(e => {
             const Experience = {
@@ -208,7 +264,7 @@ function AjoutEmploye() {
 
 
     })
-    // Afficherinfo()
+   
 
 }
 AjoutEmploye()
@@ -248,7 +304,7 @@ function ZoneAff() {
         listRec.style.display = "flex"
         listRec.innerHTML = "";
         const ListRec = ListEmploye.filter((emp) => { return emp.zone === "ussingned" && (emp.role === "receptionnite" || emp.role === "Manager" || emp.role === "nettoyage") })
-       
+
         if (ListRec.length === 0) {
             listRec.insertAdjacentHTML("beforeend", '<p>aucun</p>')
         }
@@ -342,7 +398,13 @@ function ZoneAff() {
         })
 
         if (ListConference.length === 0) {
+            ListC.insertAdjacentHTML("afterbegin", `<button class="closeCon">Fermer</button>`);
             ListC.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
+            const close = document.querySelector(".closeCon");
+            close.addEventListener("click", () => {
+                ListC.style.display = "none";
+
+            })
         } else {
             ListConference.forEach(emp => {
 
@@ -356,7 +418,7 @@ function ZoneAff() {
                     </div>
             
              `)
-              let card = ListC.lastElementChild;
+                let card = ListC.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "conference", ".Conference", card)
 
@@ -371,6 +433,9 @@ function ZoneAff() {
                 ListC.style.display = "none";
 
             })
+            console.log(document.querySelector("#listC")
+
+)
         }
     })
 
@@ -407,7 +472,7 @@ function ZoneAff() {
                      </div>
             
              `)
-              let card = listSer.lastElementChild;
+                let card = listSer.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "serveur", ".Serveur", card)
 
@@ -438,7 +503,7 @@ function ZoneAff() {
         if (ListArchive.length === 0) {
             listArch.insertAdjacentHTML("beforeend", `<p>aucun</p>`)
 
-            
+
 
         } else {
             ListArchive.forEach(emp => {
@@ -452,7 +517,7 @@ function ZoneAff() {
                      </div>
             
             `)
-             let card = listArch.lastElementChild;
+                let card = listArch.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "archive", ".Archives", card)
 
@@ -485,7 +550,7 @@ function ZoneAff() {
 
         if (ListSecu.length === 0) {
             listSec.insertAdjacentHTML("beforeend", `<p>aucun</p>`);
-            
+
         } else {
             ListSecu.forEach(emp => {
                 listSec.insertAdjacentHTML("beforeend", `
@@ -497,7 +562,7 @@ function ZoneAff() {
                     </div>
                 </div>
             `);
-             let card = listSec.lastElementChild;
+                let card = listSec.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "securite", ".Securite", card)
 
@@ -530,6 +595,8 @@ function ZoneAff() {
 
 
 function Afficheprofile(id) {
+    numexper = 0;
+    ContainerExpe2.style.display = "flex"
     id = Number(id);
     const Empl = ListEmploye.find(e => {
         return e.idEmp === id
@@ -559,19 +626,34 @@ function Afficheprofile(id) {
         ContainerExpe2.innerHTML = `
       
         <div class="Expperecedent">
+        
+        
+            <h3>Experience:</h3>
           
         ${Empl.Expriences.map(e => {
+            if (e.post===""||e.Compagnie===""||e.Debut===""||e.Fin==="") {
+               console.log("ss");
+               
+               
+            }else{
+                numexper++;
+                
+            return `<div class="ex"><div class="group2"> Post :${e.post}</div>
+             <div class="group2"> companige :${e.Compagnie}</div>
+              <div class="group2"> Date Debu  : ${e.Debut}</div>
+               <div class="group2"> Date Fin : ${e.Fin}</div><hr></div>`
+            }
+            
 
-
-            return `<div class="group"> Post :${e.post}</div>
-             <div class="group"> companige :${e.Compagnie}</div>
-              <div class="group"> nombre experience :${e.Fin - e.Deb}</div>`
         }
 
 
         ).join("")} </div>`
 
 
+    }
+    if (numexper == 0) {
+        ContainerExpe2.style.display="none"
     }
 
 
@@ -599,7 +681,6 @@ const capaciteZone = {
 function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
     const zone = document.querySelector(zoneSelector);
 
-      // Création du wrapper
     const wrapper = document.createElement("div");
     wrapper.className = "emp-wrapper";
     const occupants = zone.querySelectorAll(".emp-wrapper").length;
@@ -610,17 +691,17 @@ function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
         return;
     }
 
-    
+
     emp.zone = zoneName;
     localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
 
-  
+
 
     const newImg = document.createElement("img");
     newImg.className = "imgprofil-z";
     newImg.src = emp.img;
     newImg.alt = emp.nom;
-    // newImg.id = emp.idEmp;
+    
 
     newImg.addEventListener("click", () => {
         Afficheprofile(emp.idEmp);
@@ -630,18 +711,18 @@ function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
     btnRemove.textContent = "X";
     btnRemove.className = "btn-remove-zone";
     btnRemove.addEventListener("click", () => {
-        
+
         emp.zone = "ussingned";
         localStorage.setItem("ListEmploye", JSON.stringify(ListEmploye));
         renderZones();
-        Afficherinfo(); 
+        Afficherinfo();
 
-        
-        const zonesBtns = ["#sallRec","#sallP","#sallC","#sallSer","#sallAr","#sallSec"];
+
+        const zonesBtns = ["#sallRec", "#sallP", "#sallC", "#sallSer", "#sallAr", "#sallSec"];
         zonesBtns.forEach(z => {
-            const list = document.querySelector(z.replace("#sall","#list"));
-            if(list && list.style.display === "flex"){
-                document.querySelector(z).click(); 
+            const list = document.querySelector(z.replace("#sall", "#list"));
+            if (list && list.style.display === "flex") {
+                document.querySelector(z).click();
             }
         });
     });
@@ -650,9 +731,9 @@ function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
     wrapper.appendChild(btnRemove);
     zone.appendChild(wrapper);
 
-    if(cardElement) cardElement.remove();
+    if (cardElement) cardElement.remove();
 
-    
+
     Afficherinfo();
 
     colorierToutesLesZones();
@@ -660,6 +741,10 @@ function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
 
 
 function renderZones() {
+   document.querySelectorAll(".ListZEmp").forEach(e=>{
+        e.style.display="none"
+   })
+    
     const zones = {
         conference: document.querySelector(".Conference"),
         reception: document.querySelector(".Reception"),
@@ -669,10 +754,11 @@ function renderZones() {
         securite: document.querySelector(".Securite")
     };
 
-   
+
     Object.values(zones).forEach(z => z.innerHTML = "");
 
     ListEmploye.forEach(emp => {
+        
         if (!emp.zone || emp.zone === "ussingned") return;
 
         const zoneDiv = zones[emp.zone];
@@ -702,6 +788,7 @@ function renderZones() {
     });
 
     colorierToutesLesZones();
+    
 }
 
 function colorierZone(zoneSelector) {
@@ -713,13 +800,14 @@ function colorierZone(zoneSelector) {
 }
 
 function colorierToutesLesZones() {
-   
     colorierZone(".Reception");
     colorierZone(".Serveur");
-   
     colorierZone(".Archives");
     colorierZone(".Securite");
+   
+    
 }
+
 
 renderZones();
 colorierToutesLesZones();

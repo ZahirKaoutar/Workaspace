@@ -22,20 +22,24 @@
                         <div class="container">
                             <div class="group">
                                 <label for="img">Image</label>
-                                <input id="img" class="img" type="url" name="image" required>
+                                <input id="img" class="img" type="url" name="image">
                                 <img id="previewImg" class="previewImg" src="" alt="Aucun aperçu">
+
                             </div>
                             <div class="group">
                                 <label for="nom">Nom</label>
                                 <input id="nom" class="nom" name="nom" type="text" required>
+                                 <span class="error nom-error"></span>
                             </div>
                             <div class="group">
                                 <label for="email">Email</label>
                                 <input id="email" name="email" class="email" type="email" required>
+                                 <span class="error email-error"></span>
                             </div>
                             <div class="group">
                                 <label for="tel">Telé</label>
                                 <input type="tel" name="tel" id="tel" class="tel" required>
+                                 <span class="error tel-error"></span>
                             </div>
                             <div class="group">
                                 <label for="role">Role</label>
@@ -101,12 +105,11 @@
 
 
                         </div>
+                        
 
 
                         <div class="expContainer2">
-                            <ul id="list-experience">
-
-                            </ul>
+                            
                         </div>
 
 
@@ -138,7 +141,9 @@
             <div class="ZonCont">
 
                 <div data-zone="conference" class="z-Conference">
-                    <div id="listC" class="ListZEmp"> </div>
+                    <div id="listC" class="ListZEmp"> 
+                        
+                    </div>
 
                     <div class="name-z">Salle de conference</div>
                     <button id="sallC" class="plus">+</button>
@@ -164,14 +169,14 @@
                 <div data-zone="personnel" class="z-personnel">
 
                     <div id="listPer" class="ListZEmp"></div>
-                    <div>Salle Personnel</div>
+                    <div class="name-z">Salle Personnel</div>
                     <button id="sallP" class="plus">+</button>
                     <div class="Personnel"></div>
                 </div>
                 <div data-zone="archives" class="z-archives">
                     <div id="listArch" class="ListZEmp"> </div>
 
-                    <div> Salle Archives </div>
+                    <div class="name-z"> Salle Archives </div>
                     <button id="sallAr" class="plus">+</button>
                     <div class="Archives"></div>
                 </div>
@@ -180,7 +185,7 @@
 
                     <div id="listSec" class="ListZEmp"></div>
 
-                    <div> Salle Securite </div>
+                    <div class="name-z"> Salle Securite </div>
 
                     <button id="sallSec" class="plus">+</button>
                     <div class="Securite"></div>
