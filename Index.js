@@ -16,7 +16,6 @@ let numexper = 0;
 
 const regexNom = /^[a-zA-ZÀ-ÿ\s'-]{2,}$/; 
 
-
 const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 const regexTel = /^[0-9]{8,15}$/; 
 
@@ -90,7 +89,7 @@ const ListEmploye = JSON.parse(localStorage.getItem("ListEmploye") || "[]")
 
 function ExpDynamique() {
     ContainerExpe.style.display = "none"
-    let i=0;
+    
 
     AddExperiece.addEventListener("click", (e) => {
         e.preventDefault()
@@ -131,7 +130,7 @@ function ExpDynamique() {
 
 
         ContainerExpe.appendChild(Expprecedent)
-        i++;
+       
 
         const SuppExperience = Expprecedent.querySelector(".btnSupprimer")
         SuppExperience.addEventListener("click", () => {

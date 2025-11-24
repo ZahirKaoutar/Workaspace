@@ -17,6 +17,16 @@ header h1 {
     text-align: center;
     margin-top: 10px;
 }
+.closeRec,
+.closePer,
+.closeCon,
+.closeSer,
+.closeArch,
+.closeSec {
+    background-color: red;
+    color:white
+
+}
 
 .error {
     color: red;
@@ -457,7 +467,7 @@ form button {
 
 
 
-/* Style pour le bouton X */
+
 .btn-remove-zone {
     width: 16px;
     height: 16px;
@@ -546,10 +556,10 @@ form button {
     max-width: 35px;
     flex-shrink: 0;
     pointer-events: auto;
-    /* Réactive les clics sur les employés */
+    
 }
 
-/* Images des employés - TAILLE FIXE */
+
 .imgprofil-z {
     width: 30px;
     height: 30px;
@@ -616,7 +626,7 @@ form button {
         grid-template-columns: repeat(20, minmax(0, 1fr));
         grid-template-rows: repeat(12, minmax(0, 1fr));
     }
-     .z-Conference {
+    .z-Conference {
    
     grid-row: 1/5;
     grid-column: 1/9;
