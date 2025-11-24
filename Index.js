@@ -717,13 +717,6 @@ function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
         Afficherinfo();
 
 
-        const zonesBtns = ["#sallRec", "#sallP", "#sallC", "#sallSer", "#sallAr", "#sallSec"];
-        zonesBtns.forEach(z => {
-            const list = document.querySelector(z.replace("#sall", "#list"));
-            if (list && list.style.display === "flex") {
-                document.querySelector(z).click();
-            }
-        });
     });
 
     wrapper.appendChild(newImg);
