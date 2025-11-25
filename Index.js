@@ -17,24 +17,12 @@ let numexper = 0;
 const regexNom = /^[a-zA-ZÀ-ÿ\s'-]{2,}$/; 
 
 const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-const regexTel = /^[0-9]{8,15}$/; 
-
-function verifierDatesExp() {
-    const experiences = document.querySelectorAll('.expContainer .experience');
-    for (let exp of experiences) {
-        const debut = exp.querySelector('.dateDebut').value;
-        const fin = exp.querySelector('.dateFin').value;
-
-        if (new Date(debut) > new Date(fin)) {
-            alert('La date de début doit être antérieure à la date de fin.');
-            return false;
-        }
-    }
-    return true;
-}
+const regexTel = /^(06|07)[0-9]{8}$/; 
 
 
-let idEmp = JSON.parse(localStorage.getItem("CurrentId") || "1");
+
+
+let idEmp = JSON.parse(localStorage.getItem("CurrentId") || "0");
 
 
 const modalOverlay = document.querySelector(".modalOverlay");
@@ -92,12 +80,12 @@ function ExpDynamique() {
     
 
     AddExperiece.addEventListener("click", (e) => {
-        e.preventDefault()
+       
+        
         ContainerExpe.style.display = "flex"
         let Expprecedent = document.createElement('div')
         Expprecedent.classList.add('Expperecedent')
-       numexper++;
-
+     
 
         Expprecedent.innerHTML = `
            <div class="ex">
@@ -195,37 +183,26 @@ function verifierDatesExp() {
 function AjoutEmploye() {
 
     btnEnregistrer.addEventListener("click", (e) => {
-        
-        e.preventDefault();
-        const Employe = {
-            idEmp: ++idEmp,
-            nom: document.querySelector(".nom").value,
-            email: document.querySelector(".email").value,
-            tel: document.querySelector(".tel").value,
-            img: document.querySelector(".img").value || 'img/profile.png',
-            role: document.querySelector("#role").value,
-            zone: "ussingned",
-            Expriences: []
-
-        }
-
+        const nomInput = document.querySelector(".nom");
+        const emailInput = document.querySelector(".email");
+        const telInput = document.querySelector(".tel");
 
         document.querySelectorAll(".error").forEach(e => e.textContent = "");
 
         let valid = true;
 
-        if (!regexNom.test(nom.value)) {
+        if (!regexNom.test(nomInput.value)) {
             document.querySelector(".nom-error").textContent = "Nom invalide (minimum 2 lettres)";
             valid = false;
         }
 
-        if (!regexEmail.test(email.value)) {
+        if (!regexEmail.test(emailInput.value)) {
             document.querySelector(".email-error").textContent = "Email invalide";
             valid = false;
         }
 
-        if (!regexTel.test(tel.value)) {
-            document.querySelector(".tel-error").textContent = "Téléphone invalide (8 à 15 chiffres)";
+        if (!regexTel.test(telInput.value)) {
+            document.querySelector(".tel-error").textContent = "Téléphone invalide etre  debuter par 06 ou 07";
             valid = false;
         }
         
@@ -233,13 +210,28 @@ function AjoutEmploye() {
         if (!verifierDatesExp()) {
            
             document.querySelector(".expContainer").insertAdjacentHTML("beforeend",
-                `<span class="error exp-error">La date de début doit être antérieure à la date de fin.</span>`
+                `<span class="error exp-error">La date de début doit être inferieur à la date de fin.</span>`
             );
             valid = false;
         }
     
 
         if (!valid) return;
+
+
+
+        e.preventDefault();
+        const Employe = {
+            idEmp: ++idEmp,
+            nom: nomInput.value,
+            email: emailInput.value,
+            tel: telInput.value,
+            img: document.querySelector(".img").value || 'img/profile.png',
+            role: document.querySelector("#role").value,
+            zone: "ussingned",
+            Expriences: []
+
+        }
         const Allexp = ContainerExpe.querySelectorAll(".Expperecedent")
         Allexp.forEach(e => {
             const Experience = {
@@ -290,9 +282,6 @@ function resetPreview() {
 
 
 
-
-
-
 function ZoneAff() {
     //salle reception
 
@@ -323,6 +312,7 @@ function ZoneAff() {
                 let card = listRec.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "reception", ".Reception", card)
+                     listRec.style.display="none"
 
                 })
             }
@@ -372,6 +362,7 @@ function ZoneAff() {
                 let card = listPer.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "personnel", ".Personnel", card)
+                     listPer.style.display="none"
 
                 })
             }
@@ -420,6 +411,7 @@ function ZoneAff() {
                 let card = ListC.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "conference", ".Conference", card)
+                     ListC.style.display="none"
 
 
                 })
@@ -474,6 +466,7 @@ function ZoneAff() {
                 let card = listSer.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "serveur", ".Serveur", card)
+                    listSer.style.display="none"
 
                 })
             })
@@ -519,6 +512,7 @@ function ZoneAff() {
                 let card = listArch.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "archive", ".Archives", card)
+                     listArch.style.display="none"
 
                 })
             })
@@ -564,6 +558,8 @@ function ZoneAff() {
                 let card = listSec.lastElementChild;
                 card.addEventListener("click", () => {
                     AjoutEmployeDansLazone(emp, "securite", ".Securite", card)
+                    listSec.style.display="none"
+
 
                 })
             });
@@ -657,14 +653,9 @@ function Afficheprofile(id) {
 
 
 
+
+
 }
-
-
-
-
-
-
-
 
 
 const capaciteZone = {
@@ -679,6 +670,12 @@ const capaciteZone = {
 
 function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
     const zone = document.querySelector(zoneSelector);
+    //dernier ligne
+     if(emp.zone !== "ussingned") {
+        alert(`${emp.nom} est déjà assigné à la zone ${emp.zone}`);
+        return;
+    }
+  
 
     const wrapper = document.createElement("div");
     wrapper.className = "emp-wrapper";
@@ -727,15 +724,15 @@ function AjoutEmployeDansLazone(emp, zoneName, zoneSelector, cardElement) {
 
 
     Afficherinfo();
-
+   
     colorierToutesLesZones();
 }
 
 
 function renderZones() {
-   document.querySelectorAll(".ListZEmp").forEach(e=>{
-        e.style.display="none"
-   })
+//    document.querySelectorAll(".ListZEmp").forEach(e=>{
+//         e.style.display="none"
+//    })
     
     const zones = {
         conference: document.querySelector(".Conference"),
@@ -796,19 +793,9 @@ function colorierToutesLesZones() {
     colorierZone(".Serveur");
     colorierZone(".Archives");
     colorierZone(".Securite");
-   
-    
-}
 
+}
 
 renderZones();
 colorierToutesLesZones();
-
-
-
-
-
-
-
-
 
